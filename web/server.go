@@ -25,5 +25,5 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/ps", psHandler)
 	http.HandleFunc("/startStreaming", startStreamingHandler)
-	http.ListenAndServe(":6624", nil)
+	http.ListenAndServe("192.168.86.111:6624", nil)
 }
