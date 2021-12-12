@@ -26,10 +26,16 @@ func stopStreamingHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "stopStreaming:\nError:\n%v\n", err)
 }
 
+func startFeedingHandler(w http.ResponseWriter, r *http.Request) {
+	_, err := exec.Command("/usr/bin/python3", "/home/pi/git/microcell/feeding/servo.py").Output()
+	fmt.Fprintf(w, "startFeeding:\nError:\n%v\n", err)
+}
+
 func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/ps", psHandler)
 	http.HandleFunc("/startStreaming", startStreamingHandler)
 	http.HandleFunc("/stopStreaming", stopStreamingHandler)
+	http.HandleFunc("/startFeeding", startFeedingHandler)
 	http.ListenAndServe("192.168.86.111:6624", nil)
 }
