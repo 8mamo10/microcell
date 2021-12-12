@@ -12,8 +12,8 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func psHandler(w http.ResponseWriter, r *http.Request) {
-	ls, err := exec.Command("ps").Output()
-	fmt.Fprintf(w, "ps:\n%s :Error:\n%v\n", ls, err)
+	ps, err := exec.Command("sh", "-c", "ps aux").CombinedOutput()
+	fmt.Fprintf(w, "ps:\n%s :Error:\n%v\n", ps, err)
 }
 
 func startStreamingHandler(w http.ResponseWriter, r *http.Request) {
