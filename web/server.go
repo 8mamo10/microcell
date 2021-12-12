@@ -39,6 +39,7 @@ func startStreamingHandler(w http.ResponseWriter, r *http.Request) {
 func stopStreamingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := exec.Command("/home/pi/git/microcell/streaming/stop-streaming.sh").Output()
 	log.Printf("[stopStreaming] Error:%v", err)
+	time.Sleep(5 * time.Second)
 	http.Redirect(w, r, "http://192.168.86.111:55555/", 302)
 }
 
