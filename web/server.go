@@ -9,7 +9,7 @@ import (
 )
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("index.html")
+	t, err := template.ParseFiles("/home/pi/git/microcell/web/index.html")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -48,12 +48,26 @@ func stopFeedingHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", mainHandler)
-	http.HandleFunc("/hello", helloHandler)
-	http.HandleFunc("/ps", psHandler)
-	http.HandleFunc("/startStreaming", startStreamingHandler)
-	http.HandleFunc("/stopStreaming", stopStreamingHandler)
-	http.HandleFunc("/startFeeding", startFeedingHandler)
-	http.HandleFunc("/stopFeeding", stopFeedingHandler)
-	http.ListenAndServe("192.168.86.111:6624", nil)
+	// http.HandleFunc("/", mainHandler)
+	// http.HandleFunc("/hello", helloHandler)
+	// http.HandleFunc("/ps", psHandler)
+	// http.HandleFunc("/startStreaming", startStreamingHandler)
+	// http.HandleFunc("/stopStreaming", stopStreamingHandler)
+	// http.HandleFunc("/startFeeding", startFeedingHandler)
+	// http.HandleFunc("/stopFeeding", stopFeedingHandler)
+	//http.ListenAndServe("192.168.86.111:6624", nil)
+   mux := http.NewServeMux()
+	mux.HandleFunc("/", mainHandler)
+	mux.HandleFunc("/hello", helloHandler)
+	mux.HandleFunc("/ps", psHandler)
+	mux.HandleFunc("/startStreaming", startStreamingHandler)
+	mux.HandleFunc("/stopStreaming", stopStreamingHandler)
+	mux.HandleFunc("/startFeeding", startFeedingHandler)
+	mux.HandleFunc("/stopFeeding", stopFeedingHandler)
+
+	s := &http.Server{
+                Addr: ":6624",  
+                Handler: mux,
+   } 
+   s.ListenAndServe()
 }
