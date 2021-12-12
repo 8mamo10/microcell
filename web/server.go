@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html"
+	"log"
 	"net/http"
 	"os/exec"
 )
@@ -18,25 +19,30 @@ func psHandler(w http.ResponseWriter, r *http.Request) {
 
 func startStreamingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := exec.Command("/home/pi/git/microcell/streaming/start-streaming.sh").Output()
-	fmt.Fprintf(w, "startStreaming:\nError:\n%v\n", err)
+	log.Printf("[startStreaming] Error:%v", err)
+	http.Redirect(w, r, "http://192.168.86.111:55555/", 302)
 }
 
 func stopStreamingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := exec.Command("/home/pi/git/microcell/streaming/stop-streaming.sh").Output()
-	fmt.Fprintf(w, "stopStreaming:\nError:\n%v\n", err)
+	log.Printf("[stopStreaming] Error:%v", err)
+	http.Redirect(w, r, "http://192.168.86.111:55555/", 302)
 }
 
 func startFeedingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := exec.Command("/home/pi/git/microcell/feeding/start-feeding.sh").Output()
-	fmt.Fprintf(w, "startFeeding:\nError:\n%v\n", err)
+	log.Printf("[startFeeding] Error:%v", err)
+	http.Redirect(w, r, "http://192.168.86.111:55555/", 302)
 }
 
 func stopFeedingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := exec.Command("/home/pi/git/microcell/feeding/stop-feeding.sh").Output()
-	fmt.Fprintf(w, "stopFeeding:\nError:\n%v\n", err)
+	log.Printf("[stopFeeding] Error:%v", err)
+	http.Redirect(w, r, "http://192.168.86.111:55555/", 302)
 }
 
 func main() {
+	log.Printf("Start\n")
 	mux := http.NewServeMux()
 	mux.HandleFunc("/hello", helloHandler)
 	mux.HandleFunc("/ps", psHandler)
@@ -49,5 +55,8 @@ func main() {
 		Addr:    ":55556",
 		Handler: mux,
 	}
-	s.ListenAndServe()
+	err := s.ListenAndServe()
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
 }
