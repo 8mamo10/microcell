@@ -6,6 +6,16 @@
 </head>
 <body>
   <video id="video" controls width="100%" muted></video>
+  <input type="button" onclick="location.href='/api/startStreaming'" value="モニタリング開始">
+  <br/>
+  <input type="button" onclick="location.href='/api/stopStreaming'" value="モニタリング停止">
+  <br/>
+  <input type="button" onclick="location.href='/api/startFeeding'" value="給餌開始">
+  <br/>
+  <input type="button" onclick="location.href='/api/stopFeeding'" value="給餌停止">
+  <br/>
+  <a href="live/hls/stream.m3u8">stream.m3u8</a>
+
   <script>
     if(Hls.isSupported()) {
       var video = document.getElementById('video');
@@ -17,8 +27,5 @@
     });
    }
   </script>
-<p>
-  <a href="live/hls/stream.m3u8">stream.m3u8</a>
-</p>
 </body>
 </html>

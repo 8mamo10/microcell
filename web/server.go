@@ -6,7 +6,18 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
+	"text/template"
 )
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("streaming/nginx/html/index.html")
+	if err != nil {
+		log.Printf("[index] Error:%v", err)
+	}
+	if err := t.Execute(w, nil); err != nil {
+		log.Printf("[index] Error:%v", err)
+	}
+}
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
@@ -44,6 +55,7 @@ func stopFeedingHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	log.Printf("Start\n")
 	mux := http.NewServeMux()
+	mux.HandleFunc("/index", indexHandler)
 	mux.HandleFunc("/hello", helloHandler)
 	mux.HandleFunc("/ps", psHandler)
 	mux.HandleFunc("/startStreaming", startStreamingHandler)
