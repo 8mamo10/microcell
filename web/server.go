@@ -5,7 +5,18 @@ import (
 	"html"
 	"net/http"
 	"os/exec"
+	"text/template"
 )
+
+func mainHandler(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("index.html")
+	if err != nil {
+		panic(err.Error())
+	}
+	if err := t.Execute(w, nil); err != nil {
+		panic(err.Error())
+	}
+}
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
@@ -37,6 +48,7 @@ func stopFeedingHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http.HandleFunc("/", mainHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/ps", psHandler)
 	http.HandleFunc("/startStreaming", startStreamingHandler)
