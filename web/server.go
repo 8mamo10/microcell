@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os/exec"
 	"text/template"
+	"time"
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +32,7 @@ func psHandler(w http.ResponseWriter, r *http.Request) {
 func startStreamingHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := exec.Command("/home/pi/git/microcell/streaming/start-streaming.sh").Output()
 	log.Printf("[startStreaming] Error:%v", err)
+	time.Sleep(5 * time.Second)
 	http.Redirect(w, r, "http://192.168.86.111:55555/", 302)
 }
 
