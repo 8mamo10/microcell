@@ -10,6 +10,5 @@ sudo ffmpeg \
         -input_format yuyv422 -video_size 640x480 \
         -framerate 30 -i /dev/video0 -c:v h264_omx \
         -b:v 768k -bufsize 768k -vsync 1 -g 16 \
-        -c:a aac -b:a 128k -ar 44100 -af "volume=30dB" \
         -vf "transpose=1,transpose=1" \
         -f flv rtmp://localhost/live/stream > /dev/null 2>&1 </dev/null &
