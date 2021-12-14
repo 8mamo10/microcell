@@ -30,26 +30,26 @@ func psHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func startStreamingHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := exec.Command("/home/pi/git/microcell/streaming/start-streaming.sh").Output()
+	_, err := exec.Command("sh", "-c", "/var/www/bin/start-streaming.sh").CombinedOutput()
 	log.Printf("[startStreaming] Error:%v", err)
 	time.Sleep(5 * time.Second)
 	http.Redirect(w, r, "/", 302)
 }
 
 func stopStreamingHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := exec.Command("/home/pi/git/microcell/streaming/stop-streaming.sh").Output()
+	_, err := exec.Command("sh", "-c", "/var/www/bin/stop-streaming.sh").CombinedOutput()
 	log.Printf("[stopStreaming] Error:%v", err)
 	http.Redirect(w, r, "/", 302)
 }
 
 func startFeedingHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := exec.Command("/home/pi/git/microcell/feeding/start-feeding.sh").Output()
+	_, err := exec.Command("sh", "-c", "/var/www/bin/start-feeding.sh").CombinedOutput()
 	log.Printf("[startFeeding] Error:%v", err)
 	http.Redirect(w, r, "/", 302)
 }
 
 func stopFeedingHandler(w http.ResponseWriter, r *http.Request) {
-	_, err := exec.Command("/home/pi/git/microcell/feeding/stop-feeding.sh").Output()
+	_, err := exec.Command("sh", "-c", "/var/www/bin/stop-feeding.sh").CombinedOutput()
 	log.Printf("[stopFeeding] Error:%v", err)
 	http.Redirect(w, r, "/", 302)
 }
