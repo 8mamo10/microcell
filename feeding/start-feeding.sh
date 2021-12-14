@@ -4,4 +4,4 @@ if [ $NUM -gt 0 ]; then
         echo "Already running."
         exit
 fi
-/usr/bin/python3 /home/pi/git/microcell/feeding/servo.py
+/usr/bin/python3 /var/www/bin/servo.py
