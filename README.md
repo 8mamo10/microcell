@@ -16,6 +16,6 @@ $ sudo systemctl restart nginx
 ```
 
 ```
-$ go run /home/pi/git/microcell/web/server.go
+$ go run microcell/web/server.go
 $ go build -o server server.go
 ```
