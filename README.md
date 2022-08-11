@@ -19,3 +19,15 @@ $ sudo systemctl restart nginx
 $ go run microcell/web/server.go
 $ go build -o server server.go
 ```
+
+```
+$ ls /dev/ttyUSB
+ttyUSB0  ttyUSB1  ttyUSB2
+```
+
+```
+$ apt-get update --allow-releaseinfo-change
+$ sudo bash etc/setup_air.sh
+$ sudo ifdown wwan0
+$ sudo ifup wwan0
+```
